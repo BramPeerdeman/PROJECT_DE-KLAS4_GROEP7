@@ -1,0 +1,268 @@
+-- ==============================================
+-- 1. GO_SALES BRON DATA (Transacties & Producten)
+-- ==============================================
+CREATE TABLE order_header (
+    order_number INTEGER PRIMARY KEY,
+    retailer_name TEXT,
+    retailer_site_code INTEGER,
+    retailer_contact_code INTEGER,
+    sales_staff_code INTEGER,
+    sales_branch_code INTEGER,
+    order_date TEXT,
+    order_method_code INTEGER
+);
+
+CREATE TABLE order_details (
+    order_detail_code INTEGER PRIMARY KEY,
+    order_number INTEGER,
+    product_number INTEGER,
+    quantity INTEGER,
+    unit_cost REAL,
+    unit_price REAL,
+    unit_sale_price REAL
+);
+
+CREATE TABLE order_method (
+    order_method_code INTEGER PRIMARY KEY,
+    order_method_en TEXT
+);
+
+CREATE TABLE product_line (
+    product_line_code INTEGER PRIMARY KEY,
+    product_line_en TEXT
+);
+
+CREATE TABLE product_type (
+    product_type_code INTEGER PRIMARY KEY,
+    product_line_code INTEGER,
+    product_type_en TEXT
+);
+
+CREATE TABLE product (
+    product_number INTEGER PRIMARY KEY,
+    introduction_date TEXT,
+    product_type_code INTEGER,
+    product_type_cost REAL,
+    margin REAL,
+    product_image TEXT,
+    language TEXT,
+    product_name TEXT,
+    description TEXT
+);
+
+CREATE TABLE sales_branch (
+    sales_branch_code INTEGER PRIMARY KEY,
+    address1 TEXT,
+    address2 TEXT,
+    city TEXT,
+    region TEXT,
+    postal_zone TEXT,
+    country_code INTEGER
+);
+
+CREATE TABLE sales_staff (
+    sales_staff_code INTEGER PRIMARY KEY,
+    first_name TEXT,
+    address2 TEXT,
+    last_name TEXT,
+    position_en TEXT,
+    work_phone TEXT,
+    extension TEXT,
+    fax TEXT,
+    email TEXT,
+    date_hired TEXT,
+    sales_branch_code INTEGER
+);
+
+CREATE TABLE retailer_site (
+    retailer_site_code INTEGER PRIMARY KEY,
+    retailer_code INTEGER,
+    item_3 TEXT,
+    address1 TEXT,
+    address2 TEXT,
+    city TEXT,
+    region TEXT,
+    postal_zone TEXT,
+    country_code INTEGER,
+    active_indicator INTEGER
+);
+
+CREATE TABLE returned_item (
+    return_code INTEGER PRIMARY KEY,
+    return_date TEXT,
+    order_detail_code INTEGER,
+    return_reason_code INTEGER,
+    return_quantity INTEGER
+);
+
+CREATE TABLE return_reason (
+    return_reason_code INTEGER PRIMARY KEY,
+    return_description_en TEXT
+);
+
+CREATE TABLE country (
+    country_code INTEGER PRIMARY KEY,
+    country TEXT,
+    language TEXT,
+    currency_name TEXT
+);
+
+-- ==============================================
+-- 2. CRM BRON DATA (Klanten)
+-- ==============================================
+CREATE TABLE customer (
+    CUSTOMER_CODE INTEGER PRIMARY KEY,
+    CUSTOMER_CODEMR INTEGER,
+    COMPANY_NAME TEXT,
+    CUSTOMER_TYPE_CODE INTEGER
+);
+
+CREATE TABLE customer_type (
+    CUSTOMER_TYPE_CODE INTEGER PRIMARY KEY,
+    CUSTOMER_TYPE_EN TEXT
+);
+
+CREATE TABLE customer_store (
+    CUSTOMER_SITE_CODE INTEGER PRIMARY KEY,
+    CUSTOMER_CODE INTEGER,
+    STREET TEXT,
+    ADDITION TEXT,
+    CITY TEXT,
+    STATE TEXT,
+    ZIPCODE TEXT,
+    COUNTRY_CODE INTEGER,
+    ACTIVE_INDICATOR INTEGER
+);
+
+CREATE TABLE customer_headquarters (
+    CUSTOMER_CODEMR INTEGER PRIMARY KEY,
+    CUSTOMER_NAME TEXT,
+    ADDRESS1 TEXT,
+    ADDRESS2 TEXT,
+    CITY TEXT,
+    REGION TEXT,
+    POSTAL_ZONE TEXT,
+    COUNTRY_CODE INTEGER,
+    PHONE TEXT,
+    FAX TEXT,
+    SEGMENT_CODE INTEGER
+);
+
+CREATE TABLE customer_segment (
+    SEGMENT_CODE INTEGER PRIMARY KEY,
+    LANGUAGE TEXT,
+    SEGMENT_NAME TEXT,
+    SEGMENT_DESCRIPTON TEXT
+);
+
+CREATE TABLE customer_contact (
+    CUSTOMER_CONTACT_CODE INTEGER PRIMARY KEY,
+    CUSTOMER_SITE_CODE INTEGER,
+    FIRST_NAME TEXT,
+    LAST_NAME TEXT,
+    JOB_POSITION_EN TEXT,
+    FAX TEXT,
+    E_MAIL TEXT,
+    GENDER TEXT
+);
+
+CREATE TABLE crm_country (
+    COUNTRY_CODE INTEGER PRIMARY KEY,
+    COUNTRY_EN TEXT,
+    FLAG_IMAGE TEXT,
+    SALES_TERRITORY_CODE INTEGER
+);
+
+CREATE TABLE sales_territory (
+    SALES_TERRITORY_CODE INTEGER PRIMARY KEY,
+    TERRITORY_NAME_EN TEXT
+);
+
+CREATE TABLE age_group (
+    AGE_GROUP_CODE INTEGER PRIMARY KEY,
+    UPPER_AGE INTEGER,
+    LOWER_AGE INTEGER
+);
+
+CREATE TABLE sales_demographic (
+    DEMOGRAPHIC_CODE INTEGER PRIMARY KEY,
+    CUSTOMER_CODEMR INTEGER,
+    AGE_GROUP_CODE INTEGER,
+    SALES_PERCENT INTEGER
+);
+
+-- ==============================================
+-- 3. GO_STAFF BRON DATA (Personeel & Cursussen)
+-- ==============================================
+CREATE TABLE sales_representative (
+    SALES_REPRESENTATIVE_CODE INTEGER PRIMARY KEY,
+    FIRST_NAME TEXT,
+    LAST_NAME TEXT,
+    POSITION_EN TEXT,
+    WORK_PHONE TEXT,
+    EXTENSION TEXT,
+    FAX TEXT,
+    EMAIL TEXT,
+    DATE_HIRED TEXT,
+    SALES_OFFICE_CODE INTEGER,
+    MANAGER_CODE INTEGER
+);
+
+CREATE TABLE sales_office (
+    SALES_OFFICE_CODE INTEGER PRIMARY KEY,
+    STREET TEXT,
+    ADDITION TEXT,
+    CITY TEXT,
+    REGION TEXT,
+    ZIPCODE TEXT,
+    COUNTRY_CODE INTEGER
+);
+
+CREATE TABLE course (
+    COURSE_CODE INTEGER PRIMARY KEY,
+    COURSE_DESCRIPTION TEXT
+);
+
+CREATE TABLE training (
+    YEAR INTEGER,
+    SALES_REPRESENTATIVE_CODE INTEGER,
+    COURSE_CODE INTEGER
+);
+
+CREATE TABLE satisfaction_type (
+    SATISFACTION_TYPE_CODE INTEGER PRIMARY KEY,
+    SATISFACTION_TYPE_DESCRIPTION TEXT
+);
+
+CREATE TABLE satisfaction (
+    YEAR INTEGER,
+    SALES_REPRESENTATIVE_CODE INTEGER,
+    SATISFACTION_TYPE_CODE INTEGER
+);
+
+-- ==============================================
+-- 4. CSV BRON BESTANDEN
+-- ==============================================
+CREATE TABLE sales_target (
+    SALES_STAFF_CODE INTEGER,
+    SALES_YEAR INTEGER,
+    SALES_PERIOD INTEGER,
+    RETAILER_NAME TEXT,
+    PRODUCT_NUMBER INTEGER,
+    SALES_TARGET INTEGER,
+    RETAILER_CODE INTEGER
+);
+
+CREATE TABLE product_forecast (
+    PRODUCT_NUMBER INTEGER,
+    YEAR INTEGER,
+    MONTH INTEGER,
+    EXPECTED_VOLUME INTEGER
+);
+
+CREATE TABLE inventory_levels (
+    INVENTORY_YEAR INTEGER,
+    INVENTORY_MONTH INTEGER,
+    PRODUCT_NUMBER INTEGER,
+    INVENTORY_COUNT INTEGER
+);
